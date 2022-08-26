@@ -12,7 +12,7 @@ export const fetchReservations = () => {
         .then(
             (userReservations) => {
                 // Store the external state in application state
-                applicationState.Reservations = userReservations
+                applicationState.reservations = userReservations
             }
         )
 }
@@ -41,6 +41,9 @@ export const getReservations = () => {
 }
 export const getClowns = () => {
     return applicationState.clowns.map(clown =>({...clown}))
+}
+export const getCompletions = () => {
+    return applicationState.completions.map(completion =>({...completion}))
 }
 
 export const sendReservation = (userReservation) => {
