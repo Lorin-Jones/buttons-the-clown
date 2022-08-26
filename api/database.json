@@ -1,14 +1,58 @@
 {
-    "reservations": [],
-    "clowns": [
-        {
-            "id": 1,
-            "name": "Buttons"
-        },
-        {
-            "id": 2,
-            "name": "Lollipop"
-        }
-    ],
-    "completions": []
+  "reservations": [
+    {
+      "parent": "Whistler",
+      "child": "Blade",
+      "attending": 10,
+      "address": "902 Sewer Street",
+      "date": "2022-09-30",
+      "duration": 2,
+      "id": 1
+    },
+    {
+      "parent": "Jubilee",
+      "child": "Beast",
+      "attending": 8,
+      "address": "480 Mutant Ave.",
+      "date": "2022-10-28",
+      "duration": 3,
+      "id": 2
+    },
+    {
+      "parent": "Pig man",
+      "child": "Dudley",
+      "attending": 8,
+      "address": "222 Hell hole",
+      "date": "2022-11-26",
+      "duration": 4,
+      "id": 3
+    },
+    {
+      "parent": "Clem",
+      "child": "Weasel",
+      "attending": 3,
+      "address": "555 Dummy Way",
+      "date": "2022-08-27",
+      "duration": 2,
+      "id": 5
+    }
+  ],
+  "clowns": [
+    {
+      "id": 1,
+      "name": "Buttons"
+    },
+    {
+      "id": 2,
+      "name": "Lollipop"
+    }
+  ],
+  "completions": [
+    {
+      "reservationId": 3,
+      "clownId": 2,
+      "date_created": 1661532037975,
+      "id": 1
+    }
+  ]
 }
