@@ -1,5 +1,5 @@
-import { getReservations, saveCompletion, getCompletions } from "./dataAccess.js"
-import { deleteReservation } from "./dataAccess.js"
+import { getRequests, saveCompletion, getCompletions } from "./dataAccess.js"
+import { deleteRequest } from "./dataAccess.js"
 import { getClowns } from "./dataAccess.js"
 
 const mainContainer = document.querySelector("#container")
@@ -15,44 +15,44 @@ const mainContainer = document.querySelector("#container")
 //         `
 //     return html
 // }
-export const Reservations = () => {
-    const reservations = getReservations()
+export const Requests = () => {
+    const requests = getRequests()
     const clowns = getClowns()
     const completions = getCompletions()
-    const sortedDesc = reservations.sort(
+    const sortedDesc = requests.sort(
         (objA, objB) => (objA.date > objB.date) ? 1 : ((objB.date > objA.date) ? -1 : 0)
     )
     let html = ""
     
     const listItems = sortedDesc.map(
-                    (reservation) => {
+                    (request) => {
                         completions.map(
                             (completion) => {
-                                if (reservation.id === completion.reservationId) {
+                                if (request.id === completion.requestId) {
 
                                 } else {
                                     return `<ul>
-                                        <li id="reservation">${reservation.parent}
+                                        <li id="request">${request.parentName}
                                         <select class="clowns" id="clowns">
                                         <option value="">Choose</option>
                                         ${
                                             clowns.map(
                                                 (clown) => {
-                                                    return `<option value="${reservation.id}--${clown.id}">${clown.name}</option>`
+                                                    return `<option value="${request.id}--${clown.id}">${clown.name}</option>`
                                                 }
                                             ).join("")
                                         }
                                         </select>
-                                        <button class="reservation__delete"
-                                                id="reservation--${reservation.id}">
+                                        <button class="request__delete"
+                                                id="request--${request.id}">
                                             Delete
                                         </button>
                                         </li>
-                                        <li id="reservation">${reservation.child}</li>
-                                        <li id="reservation">${reservation.attending}</li>
-                                        <li id="reservation">${reservation.address}</li>
-                                        <li id="reservation">${reservation.date}</li>
-                                        <li id="reservation">${reservation.duration}</li>
+                                        <li id="request">${request.childName}</li>
+                                        <li id="request">${request.numberOfChildren}</li>
+                                        <li id="request">${request.address}</li>
+                                        <li id="request">${request.reservationDate}</li>
+                                        <li id="request">${request.reservationHours}</li>
                                     </ul>`
 
                                 
@@ -69,9 +69,9 @@ export const Reservations = () => {
 }
 
 mainContainer.addEventListener("click", click => {
-    if (click.target.id.startsWith("reservation--")) {
-        const [,reservationId] = click.target.id.split("--")
-        deleteReservation(parseInt(reservationId))
+    if (click.target.id.startsWith("request--")) {
+        const [,requestId] = click.target.id.split("--")
+        deleteRequest(parseInt(requestId))
         
     }
 })
@@ -79,7 +79,7 @@ mainContainer.addEventListener(
     "change",
     (event) => {
         if (event.target.id === "clowns") {
-            const [reservationId, clownId] = event.target.value.split("--")
+            const [requestId, clownId] = event.target.value.split("--")
 
             /*
                 This object should have 3 properties
@@ -87,7 +87,7 @@ mainContainer.addEventListener(
                    2. clownId
                    3. date_created
             */
-            const completion = { reservationId: parseInt(reservationId), clownId: parseInt(clownId), date_created: Date.now() }
+            const completion = { requestId: parseInt(requestId), clownId: parseInt(clownId), date_created: Date.now() }
             saveCompletion(completion)
             /*
                 Invoke the function that performs the POST request

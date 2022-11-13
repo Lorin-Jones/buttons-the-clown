@@ -1,11 +1,11 @@
-import { fetchReservations } from "./dataAccess.js"
+import { fetchRequests } from "./dataAccess.js"
 import { ButtonsTheClown } from "./ButtonsTheClown.js"
 import { fetchClowns } from "./dataAccess.js"
 
 const mainContainer = document.querySelector("#container")
 
 const render = () => {
-    fetchReservations()
+    fetchRequests()
         .then(() => fetchClowns())
         .then(
             () => {

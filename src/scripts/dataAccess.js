@@ -1,18 +1,18 @@
 const applicationState = {
-    reservations: [],
+    requests: [],
     clowns: [],
     completions: []
 }
 const API = "http://localhost:8088"
 const mainContainer = document.querySelector("#container")
 
-export const fetchReservations = () => {
-    return fetch(`${API}/Reservations`)
+export const fetchRequests = () => {
+    return fetch(`${API}/requests`)
         .then(response => response.json())
         .then(
-            (userReservations) => {
+            (userRequests) => {
                 // Store the external state in application state
-                applicationState.reservations = userReservations
+                applicationState.requests = userRequests
             }
         )
 }
@@ -36,8 +36,8 @@ export const fetchCompletions = () => {
 }
 
 
-export const getReservations = () => {
-    return applicationState.reservations.map(reservation =>({...reservation}))
+export const getRequests = () => {
+    return applicationState.requests.map(request =>({...request}))
 }
 export const getClowns = () => {
     return applicationState.clowns.map(clown =>({...clown}))
@@ -46,25 +46,25 @@ export const getCompletions = () => {
     return applicationState.completions.map(completion =>({...completion}))
 }
 
-export const sendReservation = (userReservation) => {
+export const sendRequest = (userRequest) => {
     const fetchOptions = {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(userReservation)
+        body: JSON.stringify(userRequest)
     }
 
 
-    return fetch(`${API}/reservations`, fetchOptions)
+    return fetch(`${API}/requests`, fetchOptions)
         .then(response => response.json())
         .then(() => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
         })
 }
 
-export const deleteReservation = (id) => {
-    return fetch(`${API}/reservations/${id}`, { method: "DELETE"})
+export const deleteRequest = (id) => {
+    return fetch(`${API}/requests/${id}`, { method: "DELETE"})
         .then(
             () => {
                 mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
